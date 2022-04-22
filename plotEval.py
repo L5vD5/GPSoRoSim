@@ -24,18 +24,21 @@ input = train_data[:,:3]
 label = train_data[:,3:]
 test_input = test_data[:,:3]
 test_label = test_data[:,3:]
-print(np.max(input))
+# print(test_input.shape,test_label.shape)
+# print(np.max(input))
 # print("input: ", input)
 # print("label: ", label)
 
-GPR = gaussian_process.GaussianProcessRegressor()
+GPR = gaussian_process.GaussianProcessRegressor(kernel=gaussian_process.kernels.RBF(length_scale=1.2))
 GPR.fit(input, label)
 
 # print(input[0].reshape(-1,3))
 # print(np.linalg.norm(GPR.predict(input[0].reshape(-1,3))))
 # print(np.linalg.norm(GPR.predict(input[0].reshape(-1,3))-label[0]))
-print(input)
 pred = GPR.predict(test_input.reshape(-1,3))
+
+print(input, test_input)
+print(np.max(test_label))
 print(np.max(pred))
 def update(frame, data, line):
   line[0].set_data(data[20*frame, 0:3*nMarker-2:3], data[20*frame, 1:3*nMarker-1:3])
