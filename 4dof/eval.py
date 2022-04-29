@@ -36,8 +36,7 @@ print('maximum test X {}'.format(np.max(test_X)))
 fig = plt.figure()
 
 ax = fig.add_subplot(projection='3d')
-ax = fig.add_subplot(projection='3d')
-ax.set_title('GT')
+ax.set_title('GT(Blue) and Pred(Red)')
 
 train_X = train_X[0:100]
 train_y = train_y[0:100]
@@ -60,14 +59,14 @@ def update2(frame, data2, line2):
 
 
 pred = pred.reshape(-1, 9, 3)
-print(np.max((test_y - pred)/test_y))
-pred += [0.1, 0, 0]
+print(np.argmax((test_y - pred)/test_y, axis=0))
+# pred += [0.1, 0, 0]
 
 line = ax.plot(test_y[0, :, 0], test_y[0, :, 1], test_y[0, :, 2], '.-')
 line2 = ax.plot(pred[0, :, 0], pred[0, :, 1], pred[0, :, 2], '.-', c='r')
-# line = ax.plot(test_y[1455, :, 0], test_y[1455, :, 1], test_y[1595, :, 2], '.-')
-# line2 = ax.plot(pred[1455, :, 0], pred[1455, :, 1], pred[1455, :, 2], '.-', c='r')
+# line = ax.plot(test_y[3956, :, 0], test_y[3956, :, 1], test_y[3956, :, 2], '.-')
+# line2 = ax.plot(pred[3956, :, 0], pred[3956, :, 1], pred[3956, :, 2], '.-', c='r')
 
-ani = FuncAnimation(fig, update, fargs=[test_y, line], frames=range(len(test_y)), interval=100)
-ani2 = FuncAnimation(fig, update2, fargs=[pred, line2], frames=range(len(test_y)), interval=100)
+ani = FuncAnimation(fig, update, fargs=[test_y, line], frames=range(len(test_y)), interval=300)
+ani2 = FuncAnimation(fig, update2, fargs=[pred, line2], frames=range(len(test_y)), interval=300)
 plt.show()
